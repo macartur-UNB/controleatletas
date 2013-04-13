@@ -100,7 +100,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
         jTextSalario.setText(null);
         jTextTotalLutas.setText(null);
         jTextTotalDerrotas.setText(null);
-        jTextTotalDesistencia.setText(null);
+        jTextTotalDesistencias.setText(null);
         atualizarDivisao(0);
     }
 
@@ -149,6 +149,17 @@ public class CadastroSumotori extends javax.swing.JFrame {
                 jComboBoxSexo.setSelectedIndex(SEXO_FEMININO_INDICE);
                 break;
         }
+        
+        
+        //prencher campos ficha tecnica
+        jComboBoxCategorias.setSelectedIndex(umSumotori.getCategoria());
+        atualizarDivisao(jComboBoxCategorias.getSelectedIndex());
+        
+        jTextSalario.setText(String.valueOf(umSumotori.getSalario()));
+        jTextTotalLutas.setText(String.valueOf(umSumotori.getTotalLutas()));
+        jTextTotalVitorias.setText(String.valueOf(umSumotori.getTotalVitorias()));
+        jTextTotalDerrotas.setText(String.valueOf(umSumotori.getTotalDerrotas()));
+        jTextTotalDesistencias.setText(String.valueOf(umSumotori.getTotalDesistencias()));
     }
 
     private boolean validarCampos() {
@@ -166,6 +177,48 @@ public class CadastroSumotori extends javax.swing.JFrame {
                 return false;
             }
         }
+        
+        
+        try{
+            Double.parseDouble(jTextSalario.getText());
+        }catch(Exception e){
+         this.exibirInformacao("O valor do campo 'Salario' é inválido.");
+            jTextSalario.requestFocus();
+            return false;
+        }
+        
+        try{
+            Integer.parseInt(jTextTotalLutas.getText());
+        }catch(Exception e){
+            this.exibirInformacao("O valor do campo 'Total de Lutas' é inválido.");
+            jTextTotalLutas.requestFocus();
+            return false;
+        }
+        
+        try{
+            Integer.parseInt(jTextTotalVitorias.getText());
+        }catch(Exception e){
+         this.exibirInformacao("O valor do campo 'Total de Vitorias' é inválido.");
+            jTextTotalVitorias.requestFocus();
+            return false;
+        }
+                
+        try{
+            Integer.parseInt(jTextTotalDerrotas.getText());
+        }catch(Exception e){
+         this.exibirInformacao("O valor do campo 'Total de Derrotas' é inválido.");
+            jTextTotalDerrotas.requestFocus();
+            return false;
+        }
+        
+        try{
+            Integer.parseInt(jTextTotalDesistencias.getText());
+        }catch(Exception e){
+         this.exibirInformacao("O valor do campo 'Total de Desistencias' é inválido.");
+            jTextTotalDesistencias.requestFocus();
+            return false;
+        }
+        
         return true;
     }
 
@@ -197,6 +250,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
         jButtonRemoverTelefone.setEnabled(modoAlteracao);
         jComboBoxSexo.setEnabled(modoAlteracao);
         jTableListaSumotori.setEnabled(modoAlteracao == false);
+        jComboBoxCategorias.setEnabled(modoAlteracao);
     }
 
     private void salvarRegistro() {
@@ -270,6 +324,16 @@ public class CadastroSumotori extends javax.swing.JFrame {
         }
         modoAlteracao = false;
         novoRegistro = false;
+        
+        
+        //colocar valores de Sumotori
+        umSumotori.setCategoria(jComboBoxCategorias.getSelectedIndex());
+        umSumotori.setSalario(Float.parseFloat(jTextSalario.getText()));
+        umSumotori.setTotalLutas(Integer.parseInt(jTextTotalLutas.getText()));
+        umSumotori.setTotalVitorias(Integer.parseInt(jTextTotalVitorias.getText()));
+        umSumotori.setTotalDerrotas(Integer.parseInt(jTextTotalDerrotas.getText()));
+        umSumotori.setTotalDesistencias(Integer.parseInt(jTextTotalDesistencias.getText()));
+        
         this.carregarListaSumotori();
         this.habilitarDesabilitarCampos();
     }
@@ -349,9 +413,9 @@ public class CadastroSumotori extends javax.swing.JFrame {
         jTextTotalLutas = new javax.swing.JTextField();
         jTextTotalVitorias = new javax.swing.JTextField();
         jTextTotalDerrotas = new javax.swing.JTextField();
-        jTextTotalDesistencia = new javax.swing.JTextField();
+        jTextTotalDesistencias = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jListSumotori = new javax.swing.JList();
+        jListPremiacoes = new javax.swing.JList();
         jButtonAdicionarPremicao = new javax.swing.JButton();
         jButtonRemoverPremiacao = new javax.swing.JButton();
         jLabelDivisao = new javax.swing.JLabel();
@@ -645,7 +709,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
 
         jLabelTotalDerrotas.setText("Total de Derrotas:");
 
-        jLabelTotalDesistencia.setText("Total de Desistencia:");
+        jLabelTotalDesistencia.setText("Total de Desistencias:");
 
         jComboBoxCategorias.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Yokusana", "Ozeki", "Sekiwake", "Komusubi", "Makuuchi", "Joryou", "Makushita", "Snadanme", "Jonidan", "Jonokuchi" }));
         jComboBoxCategorias.addActionListener(new java.awt.event.ActionListener() {
@@ -654,9 +718,14 @@ public class CadastroSumotori extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane2.setViewportView(jListSumotori);
+        jScrollPane2.setViewportView(jListPremiacoes);
 
         jButtonAdicionarPremicao.setText("+");
+        jButtonAdicionarPremicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAdicionarPremicaoActionPerformed(evt);
+            }
+        });
 
         jButtonRemoverPremiacao.setText("-");
 
@@ -699,7 +768,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
                     .addGroup(jPanelFichaTecnicaLayout.createSequentialGroup()
                         .addComponent(jLabelTotalDesistencia)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextTotalDesistencia))
+                        .addComponent(jTextTotalDesistencias))
                     .addGroup(jPanelFichaTecnicaLayout.createSequentialGroup()
                         .addComponent(jLabelDivisao)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -759,7 +828,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabelTotalDesistencia)
-                            .addComponent(jTextTotalDesistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextTotalDesistencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(55, Short.MAX_VALUE))
         );
 
@@ -970,12 +1039,21 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
 }//GEN-LAST:event_jTextFieldDataNascimentoActionPerformed
 
     private void jTextDivisaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextDivisaoActionPerformed
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_jTextDivisaoActionPerformed
 
     private void jComboBoxCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriasActionPerformed
-        // TODO add your handling code here:
+        atualizarDivisao(jComboBoxCategorias.getSelectedIndex());
     }//GEN-LAST:event_jComboBoxCategoriasActionPerformed
+
+    private void jButtonAdicionarPremicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarPremicaoActionPerformed
+        CadastroPremiacao cadastro = new CadastroPremiacao(this, true);
+    cadastro.setVisible(true);
+    if (cadastro.getPremiacao() != null) {
+        premiacaoListModel.addElement(cadastro.getPremiacao());
+    }
+    cadastro.dispose();
+    }//GEN-LAST:event_jButtonAdicionarPremicaoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdicionarPremicao;
@@ -1018,7 +1096,7 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JLabel jLabelTotalDerrotas;
     private javax.swing.JLabel jLabelTotalDesistencia;
     private javax.swing.JLabel jLabelTotalVitorias;
-    private javax.swing.JList jListSumotori;
+    private javax.swing.JList jListPremiacoes;
     private javax.swing.JList jListTelefones;
     private javax.swing.JPanel jPanelEndereco;
     private javax.swing.JPanel jPanelFichaTecnica;
@@ -1048,7 +1126,7 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JTextField jTextFieldRg;
     private javax.swing.JTextField jTextSalario;
     private javax.swing.JTextField jTextTotalDerrotas;
-    private javax.swing.JTextField jTextTotalDesistencia;
+    private javax.swing.JTextField jTextTotalDesistencias;
     private javax.swing.JTextField jTextTotalLutas;
     private javax.swing.JTextField jTextTotalVitorias;
     // End of variables declaration//GEN-END:variables

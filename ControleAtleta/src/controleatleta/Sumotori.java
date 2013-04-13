@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Sumotori extends Atleta {
     //caracteristicas
-    private String categoria;//mador vai até 5 dan e profissional vai ate 10 dan
+    private int categoria;//mador vai até 5 dan e profissional vai ate 10 dan
     private double salario; //sumor da 5 categoria em diante recebe salario
     private ArrayList<Premiacao> premiacoes;
     private int totalLutas; 
@@ -16,7 +16,7 @@ public class Sumotori extends Atleta {
         super(nome);
     }
 
-    public String getCategoria() {
+    public int getCategoria() {
         return categoria;
     }
 
@@ -28,7 +28,7 @@ public class Sumotori extends Atleta {
         return salario;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(int categoria) {
         this.categoria = categoria;
     }
 
