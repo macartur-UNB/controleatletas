@@ -100,6 +100,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
         atualizarDivisao(0);
         jTextSalario.setText("0.00");
         jTextTotalLutas.setText("0");
+        jTextTotalVitorias.setText("0");
         jTextTotalDerrotas.setText("0");
         jTextTotalDesistencias.setText("0");
     }
@@ -350,6 +351,22 @@ public class CadastroSumotori extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, info, "Atenção", JOptionPane.INFORMATION_MESSAGE);
     }
 
+    private void atualizarTableLutas(){
+        ArrayList<Sumotori> listaSumotori = controleSumotori.getListaSumotori();
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Lutadores");
+        model.setRowCount(listaSumotori.size());
+        for (Sumotori sumotori : listaSumotori) {
+            model.addColumn(sumotori.getNome());
+            model.setValueAt(sumotori.getNome(),listaSumotori.indexOf(sumotori), 0);
+        }
+        jTableLutas.setModel(model);
+    }
+    
+    
+    
+    
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -419,6 +436,9 @@ public class CadastroSumotori extends javax.swing.JFrame {
         jLabelDivisao = new javax.swing.JLabel();
         jTextDivisao = new javax.swing.JTextField();
         jLabelPremiacao = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        jTableLutas = new javax.swing.JTable();
         jButtonAlterar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
@@ -716,6 +736,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
             }
         });
 
+        jListPremiacoes.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane2.setViewportView(jListPremiacoes);
 
         jButtonAdicionarPremiacao.setText("+");
@@ -755,9 +776,11 @@ public class CadastroSumotori extends javax.swing.JFrame {
                     .addComponent(jLabelSalario)
                     .addComponent(jLabelTotalDeLutas)
                     .addComponent(jLabelTotalDerrotas)
-                    .addComponent(jLabelDivisao, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelFichaTecnicaLayout.createSequentialGroup()
+                        .addComponent(jLabelDivisao, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                        .addGap(78, 78, 78))
                     .addComponent(jLabelCategoria))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGap(25, 25, 25)
                 .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jTextSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -768,19 +791,29 @@ public class CadastroSumotori extends javax.swing.JFrame {
                     .addComponent(jTextTotalDesistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelPremiacao, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelFichaTecnicaLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonRemoverPremiacao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonAdicionarPremiacao, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabelPremiacao, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                        .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonRemoverPremiacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonAdicionarPremiacao, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelFichaTecnicaLayout.setVerticalGroup(
             jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelFichaTecnicaLayout.createSequentialGroup()
-                .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanelFichaTecnicaLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabelPremiacao, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelFichaTecnicaLayout.createSequentialGroup()
+                                .addComponent(jButtonAdicionarPremiacao)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonRemoverPremiacao))
+                            .addComponent(jScrollPane2)))
                     .addGroup(jPanelFichaTecnicaLayout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -809,23 +842,39 @@ public class CadastroSumotori extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextTotalDesistencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelTotalDesistencia)))
-                    .addGroup(jPanelFichaTecnicaLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelPremiacao, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanelFichaTecnicaLayout.createSequentialGroup()
-                                .addComponent(jButtonAdicionarPremiacao)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonRemoverPremiacao)))))
-                .addGap(61, 61, 61))
+                            .addComponent(jLabelTotalDesistencia))))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
-        jPanelFichaTecnicaLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBoxCategorias, jLabelCategoria, jLabelDivisao, jLabelSalario, jLabelTotalDeLutas, jLabelTotalDerrotas, jLabelTotalDesistencia, jLabelTotalVitorias, jTextDivisao, jTextSalario, jTextTotalDerrotas, jTextTotalDesistencias, jTextTotalLutas, jTextTotalVitorias});
+        jPanelFichaTecnicaLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBoxCategorias, jLabelCategoria, jLabelDivisao, jLabelPremiacao, jLabelSalario, jLabelTotalDeLutas, jLabelTotalDerrotas, jLabelTotalDesistencia, jLabelTotalVitorias, jTextDivisao, jTextSalario, jTextTotalDerrotas, jTextTotalDesistencias, jTextTotalLutas, jTextTotalVitorias});
 
         jTabbedPane1.addTab("Ficha Técnica", jPanelFichaTecnica);
+
+        jScrollPane9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPane9.setEnabled(false);
+
+        jTableLutas.setModel(new DefaultTableModel());
+        jTableLutas.setCellSelectionEnabled(true);
+        jTableLutas.setEnabled(false);
+        jTableLutas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableLutasMouseClicked(evt);
+            }
+        });
+        jScrollPane9.setViewportView(jTableLutas);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 814, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Lutas", jPanel1);
 
         jButtonAlterar.setText("Alterar");
         jButtonAlterar.addActionListener(new java.awt.event.ActionListener() {
@@ -942,10 +991,12 @@ public class CadastroSumotori extends javax.swing.JFrame {
         this.limparCampos();
         this.habilitarDesabilitarCampos();
         this.jTextFieldNome.requestFocus();
+        this.atualizarTableLutas();
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         this.salvarRegistro();
+        this.atualizarTableLutas();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -982,6 +1033,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
         this.limparCampos();
         this.carregarListaSumotori();
         this.habilitarDesabilitarCampos();
+        this.atualizarTableLutas();
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
 private void jButtonAdicionarTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarTelefoneActionPerformed
@@ -1054,6 +1106,29 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
         }
         jListPremiacoes.setModel(premiacaoListModel);
     }//GEN-LAST:event_jButtonRemoverPremiacaoActionPerformed
+
+    private void jTableLutasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableLutasMouseClicked
+        
+        DefaultTableModel model = (DefaultTableModel)jTableLutas.getModel();
+        String valor = "";
+        valor += (String) model.getValueAt(jTableLutas.getSelectedRow(),
+                                           jTableLutas.getSelectedColumn());
+        
+        if(valor.equals("null") || valor.equals(" ")){
+            valor = "Vitoria";
+        }else
+        if(valor.equals("Vitoria")){
+            valor = "Derrota";
+        }else
+        if(valor.equals("Derrota")){
+            valor = "Desistencia";
+        }else
+        if(valor.equals("Desistencia")){
+            valor = " ";
+        }
+        model.setValueAt(valor,jTableLutas.getSelectedRow(),
+                               jTableLutas.getSelectedColumn());
+    }//GEN-LAST:event_jTableLutasMouseClicked
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdicionarPremiacao;
@@ -1098,6 +1173,7 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JLabel jLabelTotalVitorias;
     private javax.swing.JList jListPremiacoes;
     private javax.swing.JList jListTelefones;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelEndereco;
     private javax.swing.JPanel jPanelFichaTecnica;
     private javax.swing.JPanel jPanelInformacoesGerais;
@@ -1105,9 +1181,11 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTableListaSumotori;
+    private javax.swing.JTable jTableLutas;
     private javax.swing.JTextField jTextDivisao;
     private javax.swing.JTextField jTextFieldAltura;
     private javax.swing.JTextField jTextFieldBairro;
