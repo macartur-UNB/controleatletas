@@ -3,9 +3,8 @@ package controleatleta;
 import java.util.ArrayList;
 
 public class Sumotori extends Atleta {
-    //caracteristicas
-    private int categoria;//mador vai até 5 dan e profissional vai ate 10 dan
-    private double salario; //sumor da 5 categoria em diante recebe salario
+    private int categoria;//classificado de acordo com o numero de vitórias
+    private double salario; //sumotori da 5 categoria em diante recebe salario
     private ArrayList<Premiacao> premiacoes;
     private int totalLutas; 
     private int totalVitorias;
@@ -70,5 +69,5 @@ public class Sumotori extends Atleta {
 
     public void setTotalVitorias(int vitorias) {
         this.totalVitorias = vitorias;
-    }    
+    }
 }

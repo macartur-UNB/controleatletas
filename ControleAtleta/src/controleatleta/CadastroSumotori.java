@@ -18,7 +18,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
     private final int  SEKIWAKE= 2;
     private final int KOMUSUBI = 3;
     private final int MAKUUCHI = 4;
-    //segunda divisão - categoria profissional
+    //segunda divisão -1  categoria profissional
     private final int JURYOU = 5;
    //3 a 6 divisão em ordem decrescente
     private final int MAKUSHITA = 6;
@@ -30,7 +30,6 @@ public class CadastroSumotori extends javax.swing.JFrame {
     private final byte SEXO_FEMININO_INDICE = 1;
     private final char SEXO_MASCULINO_VALOR = 'M';
     private final char SEXO_FEMININO_VALOR = 'F';
-    //varivaeis de controle
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private ControleSumotori controleSumotori;
     private Sumotori umSumotori;
@@ -350,23 +349,9 @@ public class CadastroSumotori extends javax.swing.JFrame {
     private void exibirInformacao(String info) {
         JOptionPane.showMessageDialog(this, info, "Atenção", JOptionPane.INFORMATION_MESSAGE);
     }
-
-    private void atualizarTableLutas(){
-        ArrayList<Sumotori> listaSumotori = controleSumotori.getListaSumotori();
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Lutadores");
-        model.setRowCount(listaSumotori.size());
-        for (Sumotori sumotori : listaSumotori) {
-            model.addColumn(sumotori.getNome());
-            model.setValueAt(sumotori.getNome(),listaSumotori.indexOf(sumotori), 0);
-        }
-        jTableLutas.setModel(model);
-    }
     
-    
-    
-    
-    
+   
+       
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -436,9 +421,6 @@ public class CadastroSumotori extends javax.swing.JFrame {
         jLabelDivisao = new javax.swing.JLabel();
         jTextDivisao = new javax.swing.JTextField();
         jLabelPremiacao = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane9 = new javax.swing.JScrollPane();
-        jTableLutas = new javax.swing.JTable();
         jButtonAlterar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
@@ -850,32 +832,6 @@ public class CadastroSumotori extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Ficha Técnica", jPanelFichaTecnica);
 
-        jScrollPane9.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jScrollPane9.setEnabled(false);
-
-        jTableLutas.setModel(new DefaultTableModel());
-        jTableLutas.setCellSelectionEnabled(true);
-        jTableLutas.setEnabled(false);
-        jTableLutas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableLutasMouseClicked(evt);
-            }
-        });
-        jScrollPane9.setViewportView(jTableLutas);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 814, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Lutas", jPanel1);
-
         jButtonAlterar.setText("Alterar");
         jButtonAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -991,12 +947,10 @@ public class CadastroSumotori extends javax.swing.JFrame {
         this.limparCampos();
         this.habilitarDesabilitarCampos();
         this.jTextFieldNome.requestFocus();
-        this.atualizarTableLutas();
     }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         this.salvarRegistro();
-        this.atualizarTableLutas();
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -1009,16 +963,6 @@ public class CadastroSumotori extends javax.swing.JFrame {
         novoRegistro = false;
         this.habilitarDesabilitarCampos();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
-
-    private void jTextFieldPesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesoActionPerformed
-    }//GEN-LAST:event_jTextFieldPesoActionPerformed
-
-    private void jTextFieldPesoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextFieldPesoPropertyChange
-    }//GEN-LAST:event_jTextFieldPesoPropertyChange
-
-    private void jTextFieldPesoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPesoFocusLost
-     
-    }//GEN-LAST:event_jTextFieldPesoFocusLost
 
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         modoAlteracao = true;
@@ -1033,23 +977,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
         this.limparCampos();
         this.carregarListaSumotori();
         this.habilitarDesabilitarCampos();
-        this.atualizarTableLutas();
     }//GEN-LAST:event_jButtonExcluirActionPerformed
-
-private void jButtonAdicionarTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarTelefoneActionPerformed
-    CadastroTelefone cadastro = new CadastroTelefone(this, true);
-    cadastro.setVisible(true);
-    if (cadastro.getTelefone() != null) {
-        telefonesListModel.addElement(cadastro.getTelefone());
-    }
-    cadastro.dispose();
-}//GEN-LAST:event_jButtonAdicionarTelefoneActionPerformed
-
-private void jButtonRemoverTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverTelefoneActionPerformed
-    if (jListTelefones.getSelectedIndex() != -1) {
-        telefonesListModel.removeElementAt(jListTelefones.getSelectedIndex());
-    }
-}//GEN-LAST:event_jButtonRemoverTelefoneActionPerformed
 
 private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
     String pesquisa = JOptionPane.showInputDialog("Informe o nome do Sumotori.");
@@ -1078,17 +1006,16 @@ private void jTableListaSumotoriMouseClicked(java.awt.event.MouseEvent evt) {//G
     }
 }//GEN-LAST:event_jTableListaSumotoriMouseClicked
 
-private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDataNascimentoActionPerformed
-// TODO add your handling code here:
-}//GEN-LAST:event_jTextFieldDataNascimentoActionPerformed
-
     private void jTextDivisaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextDivisaoActionPerformed
-      
+
     }//GEN-LAST:event_jTextDivisaoActionPerformed
 
-    private void jComboBoxCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriasActionPerformed
-        atualizarDivisao(jComboBoxCategorias.getSelectedIndex());
-    }//GEN-LAST:event_jComboBoxCategoriasActionPerformed
+    private void jButtonRemoverPremiacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverPremiacaoActionPerformed
+        if (jListPremiacoes.getSelectedIndex() != -1) {
+            premiacaoListModel.removeElementAt(jListPremiacoes.getSelectedIndex());
+        }
+        jListPremiacoes.setModel(premiacaoListModel);
+    }//GEN-LAST:event_jButtonRemoverPremiacaoActionPerformed
 
     private void jButtonAdicionarPremiacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarPremiacaoActionPerformed
         CadastroPremiacao cadastro = new CadastroPremiacao(this, true);
@@ -1100,35 +1027,40 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
         jListPremiacoes.setModel(premiacaoListModel);
     }//GEN-LAST:event_jButtonAdicionarPremiacaoActionPerformed
 
-    private void jButtonRemoverPremiacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverPremiacaoActionPerformed
-        if (jListPremiacoes.getSelectedIndex() != -1) {
-            premiacaoListModel.removeElementAt(jListPremiacoes.getSelectedIndex());
-        }
-        jListPremiacoes.setModel(premiacaoListModel);
-    }//GEN-LAST:event_jButtonRemoverPremiacaoActionPerformed
+    private void jComboBoxCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriasActionPerformed
+        atualizarDivisao(jComboBoxCategorias.getSelectedIndex());
+    }//GEN-LAST:event_jComboBoxCategoriasActionPerformed
 
-    private void jTableLutasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableLutasMouseClicked
-        
-        DefaultTableModel model = (DefaultTableModel)jTableLutas.getModel();
-        String valor = "";
-        valor += (String) model.getValueAt(jTableLutas.getSelectedRow(),
-                                           jTableLutas.getSelectedColumn());
-        
-        if(valor.equals("null") || valor.equals(" ")){
-            valor = "Vitoria";
-        }else
-        if(valor.equals("Vitoria")){
-            valor = "Derrota";
-        }else
-        if(valor.equals("Derrota")){
-            valor = "Desistencia";
-        }else
-        if(valor.equals("Desistencia")){
-            valor = " ";
+    private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDataNascimentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDataNascimentoActionPerformed
+
+    private void jButtonRemoverTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRemoverTelefoneActionPerformed
+        if (jListTelefones.getSelectedIndex() != -1) {
+            telefonesListModel.removeElementAt(jListTelefones.getSelectedIndex());
         }
-        model.setValueAt(valor,jTableLutas.getSelectedRow(),
-                               jTableLutas.getSelectedColumn());
-    }//GEN-LAST:event_jTableLutasMouseClicked
+    }//GEN-LAST:event_jButtonRemoverTelefoneActionPerformed
+
+    private void jButtonAdicionarTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarTelefoneActionPerformed
+        CadastroTelefone cadastro = new CadastroTelefone(this, true);
+        cadastro.setVisible(true);
+        if (cadastro.getTelefone() != null) {
+            telefonesListModel.addElement(cadastro.getTelefone());
+        }
+        cadastro.dispose();
+    }//GEN-LAST:event_jButtonAdicionarTelefoneActionPerformed
+
+    private void jTextFieldPesoPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jTextFieldPesoPropertyChange
+
+    }//GEN-LAST:event_jTextFieldPesoPropertyChange
+
+    private void jTextFieldPesoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPesoFocusLost
+
+    }//GEN-LAST:event_jTextFieldPesoFocusLost
+
+    private void jTextFieldPesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesoActionPerformed
+
+    }//GEN-LAST:event_jTextFieldPesoActionPerformed
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAdicionarPremiacao;
@@ -1173,7 +1105,6 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JLabel jLabelTotalVitorias;
     private javax.swing.JList jListPremiacoes;
     private javax.swing.JList jListTelefones;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelEndereco;
     private javax.swing.JPanel jPanelFichaTecnica;
     private javax.swing.JPanel jPanelInformacoesGerais;
@@ -1181,11 +1112,9 @@ private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent 
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTableListaSumotori;
-    private javax.swing.JTable jTableLutas;
     private javax.swing.JTextField jTextDivisao;
     private javax.swing.JTextField jTextFieldAltura;
     private javax.swing.JTextField jTextFieldBairro;
