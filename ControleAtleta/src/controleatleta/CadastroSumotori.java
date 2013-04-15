@@ -12,13 +12,13 @@ import javax.swing.table.DefaultTableModel;
 public class CadastroSumotori extends javax.swing.JFrame {
    
     //nome das categorias
-    //primeira divisão - 2 categoria profissional
+    //primeira divisão - categoria profissional
     private final int YOKUSANA = 0;
     private final int OZEKI = 1;
     private final int  SEKIWAKE= 2;
     private final int KOMUSUBI = 3;
     private final int MAKUUCHI = 4;
-    //segunda divisão -1  categoria profissional
+    //segunda divisão - categoria profissional
     private final int JURYOU = 5;
    //3 a 6 divisão em ordem decrescente
     private final int MAKUSHITA = 6;
@@ -47,9 +47,9 @@ public class CadastroSumotori extends javax.swing.JFrame {
         this.premiacaoListModel = new DefaultListModel();
         this.jTableListaSumotori.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-    private void atualizarDivisao(int index){
+    private void atualizarDivisao(int indice){
         String divisao = "";
-        switch(index){
+        switch(indice){
           case 0:
           case 1:
           case 2:
@@ -180,7 +180,10 @@ public class CadastroSumotori extends javax.swing.JFrame {
         
         
         try{
-            Double.parseDouble(jTextSalario.getText());
+            Double salario =Double.parseDouble(jTextSalario.getText());
+            if(salario < 0){
+                throw new Exception();
+            }
         }catch(Exception e){
          this.exibirInformacao("O valor do campo 'Salario' é inválido.");
             jTextSalario.requestFocus();
@@ -188,7 +191,10 @@ public class CadastroSumotori extends javax.swing.JFrame {
         }
         
         try{
-            Integer.parseInt(jTextTotalLutas.getText());
+            int totalLutas =Integer.parseInt(jTextTotalLutas.getText());
+            if(totalLutas < 0){
+                throw new Exception();
+            }
         }catch(Exception e){
             this.exibirInformacao("O valor do campo 'Total de Lutas' é inválido.");
             jTextTotalLutas.requestFocus();
@@ -196,7 +202,10 @@ public class CadastroSumotori extends javax.swing.JFrame {
         }
         
         try{
-            Integer.parseInt(jTextTotalVitorias.getText());
+            int totalVitorias = Integer.parseInt(jTextTotalVitorias.getText());
+            if(totalVitorias < 0){
+                throw new Exception();
+            }
         }catch(Exception e){
          this.exibirInformacao("O valor do campo 'Total de Vitorias' é inválido.");
             jTextTotalVitorias.requestFocus();
@@ -204,7 +213,10 @@ public class CadastroSumotori extends javax.swing.JFrame {
         }
                 
         try{
-            Integer.parseInt(jTextTotalDerrotas.getText());
+            int totalDerrotas = Integer.parseInt(jTextTotalDerrotas.getText());
+            if(totalDerrotas < 0){
+                throw new Exception();
+            }
         }catch(Exception e){
          this.exibirInformacao("O valor do campo 'Total de Derrotas' é inválido.");
             jTextTotalDerrotas.requestFocus();
@@ -212,7 +224,10 @@ public class CadastroSumotori extends javax.swing.JFrame {
         }
         
         try{
-            Integer.parseInt(jTextTotalDesistencias.getText());
+            int totalDesistencia = Integer.parseInt(jTextTotalDesistencias.getText());
+            if(totalDesistencia < 0){
+                throw new Exception();
+            }
         }catch(Exception e){
          this.exibirInformacao("O valor do campo 'Total de Desistencias' é inválido.");
             jTextTotalDesistencias.requestFocus();
