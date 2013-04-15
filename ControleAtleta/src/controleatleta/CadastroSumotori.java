@@ -251,6 +251,8 @@ public class CadastroSumotori extends javax.swing.JFrame {
         jComboBoxSexo.setEnabled(modoAlteracao);
         jTableListaSumotori.setEnabled(modoAlteracao == false);
         jComboBoxCategorias.setEnabled(modoAlteracao);
+        jButtonAdicionarPremiacao.setEnabled(modoAlteracao);
+        jButtonRemoverPremiacao.setEnabled(modoAlteracao);
     }
 
     private void salvarRegistro() {
@@ -331,7 +333,6 @@ public class CadastroSumotori extends javax.swing.JFrame {
         umSumotori.setTotalVitorias(Integer.parseInt(jTextTotalVitorias.getText()));
         umSumotori.setTotalDerrotas(Integer.parseInt(jTextTotalDerrotas.getText()));
         umSumotori.setTotalDesistencias(Integer.parseInt(jTextTotalDesistencias.getText()));
-        
         this.carregarListaSumotori();
         this.habilitarDesabilitarCampos();
     }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Sumotori extends Atleta {
     private int categoria;//classificado de acordo com o numero de vitórias
-    private double salario; //sumotori da 5 categoria em diante recebe salario
+    private double salario; //sumotori da 2 e 1 divisão recebe salario
     private ArrayList<Premiacao> premiacoes;
     private int totalLutas; 
     private int totalVitorias;
