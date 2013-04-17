@@ -11,7 +11,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 public class CadastroSumotori extends javax.swing.JFrame {
    
-    //nome das categorias
+    //categorias do Sumo
     //primeira divisão - categoria profissional
     private final int YOKUSANA = 0;
     private final int OZEKI = 1;
@@ -25,6 +25,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
     private final int SANDANME = 7;
     private final int JONIDAN =  8;
     private final int JONOKUCHI = 9;
+    
     //atributos gerais
     private final byte SEXO_MASCULINO_INDICE = 0;
     private final byte SEXO_FEMININO_INDICE = 1;
@@ -37,7 +38,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
     private boolean novoRegistro;
     private DefaultListModel telefonesListModel;
     private DefaultListModel premiacaoListModel;
-
+    
     public CadastroSumotori() {
         initComponents();
         this.habilitarDesabilitarCampos();
@@ -47,6 +48,15 @@ public class CadastroSumotori extends javax.swing.JFrame {
         this.premiacaoListModel = new DefaultListModel();
         this.jTableListaSumotori.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
+    
+    private void atualizarSalario(int indice){
+        if(indice < 6){
+            jTextSalario.setEditable(true);
+        }else{
+            jTextSalario.setEditable(false);
+        }
+    }
+    
     private void atualizarDivisao(int indice){
         String divisao = "";
         switch(indice){
@@ -73,7 +83,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
                 divisao += "Sexta Divisão";
           
         }
-            jTextDivisao.setText(divisao);
+         jTextDivisao.setText(divisao);
     }
     private void limparCampos() {
         jTextFieldAltura.setText("0.0");
@@ -97,6 +107,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
         jComboBoxSexo.setSelectedIndex(0);
         jComboBoxCategorias.setSelectedIndex(0);
         atualizarDivisao(0);
+        atualizarSalario(0);
         jTextSalario.setText("0.00");
         jTextTotalLutas.setText("0");
         jTextTotalVitorias.setText("0");
@@ -150,11 +161,9 @@ public class CadastroSumotori extends javax.swing.JFrame {
                 break;
         }
         
-        
-        //prencher campos ficha tecnica
         jComboBoxCategorias.setSelectedIndex(umSumotori.getCategoria());
         atualizarDivisao(jComboBoxCategorias.getSelectedIndex());
-        
+        atualizarSalario(jComboBoxCategorias.getSelectedIndex());
         jTextSalario.setText(String.valueOf(umSumotori.getSalario()));
         jTextTotalLutas.setText(String.valueOf(umSumotori.getTotalLutas()));
         jTextTotalVitorias.setText(String.valueOf(umSumotori.getTotalVitorias()));
@@ -265,9 +274,15 @@ public class CadastroSumotori extends javax.swing.JFrame {
         jButtonRemoverTelefone.setEnabled(modoAlteracao);
         jComboBoxSexo.setEnabled(modoAlteracao);
         jTableListaSumotori.setEnabled(modoAlteracao == false);
+                
         jComboBoxCategorias.setEnabled(modoAlteracao);
         jButtonAdicionarPremiacao.setEnabled(modoAlteracao);
         jButtonRemoverPremiacao.setEnabled(modoAlteracao);
+        jTextSalario.setEnabled(modoAlteracao);
+        jTextTotalLutas.setEnabled(modoAlteracao);
+        jTextTotalVitorias.setEnabled(modoAlteracao);
+        jTextTotalDerrotas.setEnabled(modoAlteracao);
+        jTextTotalDesistencias.setEnabled(modoAlteracao);
     }
 
     private void salvarRegistro() {
@@ -348,6 +363,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
         umSumotori.setTotalVitorias(Integer.parseInt(jTextTotalVitorias.getText()));
         umSumotori.setTotalDerrotas(Integer.parseInt(jTextTotalDerrotas.getText()));
         umSumotori.setTotalDesistencias(Integer.parseInt(jTextTotalDesistencias.getText()));
+        
         this.carregarListaSumotori();
         this.habilitarDesabilitarCampos();
     }
@@ -1045,6 +1061,7 @@ private void jTableListaSumotoriMouseClicked(java.awt.event.MouseEvent evt) {//G
 
     private void jComboBoxCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriasActionPerformed
         atualizarDivisao(jComboBoxCategorias.getSelectedIndex());
+        atualizarSalario(jComboBoxCategorias.getSelectedIndex());
     }//GEN-LAST:event_jComboBoxCategoriasActionPerformed
 
     private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDataNascimentoActionPerformed
