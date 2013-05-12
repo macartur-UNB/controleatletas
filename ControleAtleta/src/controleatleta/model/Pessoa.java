@@ -1,14 +1,12 @@
-package controleatleta;
 
-import java.util.ArrayList;
+package controleatleta.model;
+
 import java.util.Date;
 
-public class Atleta {
+public abstract class Pessoa {
     
-    ArrayList <String> telefones;
     private String nome;
     private Date dataNascimento;
-    private Endereco endereco;
     private Double altura;
     private Double peso;
     private String nomePai;
@@ -17,11 +15,10 @@ public class Atleta {
     private String rg;
     private String cpf;
     
-    public Atleta(String nome) {
+    public Pessoa(String nome){
         this.nome = nome;
-        this.endereco = new Endereco();
     }
-
+    
     public Double getAltura() {
         return altura;
     }
@@ -45,15 +42,8 @@ public class Atleta {
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
-
-    public Endereco getEndereco() {
-        return endereco;
-    }
-
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
+    
+    
     public String getNome() {
         return nome;
     }
@@ -100,14 +90,6 @@ public class Atleta {
 
     public void setSexo(char sexo) {
         this.sexo = sexo;
-    }
-
-    public ArrayList<String> getTelefones() {
-        return telefones;
-    }
-
-    public void setTelefones(ArrayList<String> telefones) {
-        this.telefones = telefones;
     }
     
 }

@@ -1,5 +1,9 @@
-package controleatleta;
+package controleatleta.view;
 
+import controleatleta.control.ControleSumotori;
+import controleatleta.model.Endereco;
+import controleatleta.model.Sumotori;
+import controleatleta.model.Premiacao;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,23 +13,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-public class CadastroSumotori extends javax.swing.JFrame {
+
+public class JanelaPrincipal extends javax.swing.JFrame {
    
-    //categorias do Sumo
-    //primeira divisão - categoria profissional
-    private final int YOKUSANA = 0;
-    private final int OZEKI = 1;
-    private final int  SEKIWAKE= 2;
-    private final int KOMUSUBI = 3;
-    private final int MAKUUCHI = 4;
-    //segunda divisão - categoria profissional
-    private final int JURYOU = 5;
-   //3 a 6 divisão em ordem decrescente
-    private final int MAKUSHITA = 6;
-    private final int SANDANME = 7;
-    private final int JONIDAN =  8;
-    private final int JONOKUCHI = 9;
-    
     //atributos gerais
     private final byte SEXO_MASCULINO_INDICE = 0;
     private final byte SEXO_FEMININO_INDICE = 1;
@@ -39,7 +29,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
     private DefaultListModel telefonesListModel;
     private DefaultListModel premiacaoListModel;
     
-    public CadastroSumotori() {
+    public JanelaPrincipal() { 
         initComponents();
         this.habilitarDesabilitarCampos();
         this.controleSumotori = new ControleSumotori();
@@ -49,109 +39,117 @@ public class CadastroSumotori extends javax.swing.JFrame {
         this.jTableListaSumotori.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
     
-    private void atualizarSalario(int indice){
+    private void habilitarInserirSalario(int indice){
         if(indice < 6){
-            jTextSalario.setEditable(true);
+            jTextFieldSalario.setEditable(true);
         }else{
-            jTextSalario.setEditable(false);
+            jTextFieldSalario.setEditable(false);
         }
     }
     
     private void atualizarDivisao(int indice){
         String divisao = "";
         switch(indice){
-          case 0:
-          case 1:
-          case 2:
-          case 3:
-          case 4:
+          case Sumotori.YOKUSANA:
+          case Sumotori.OZEKI:
+          case Sumotori.SEKIWAKE:
+          case Sumotori.KOMUSUBI:
+          case Sumotori.MAKUUCHI:
                 divisao += "Primeira Divisão";
                 break;
-          case 5:
+          case Sumotori.JURYOU:
                 divisao +=  "Segunda Divisão";
                 break;
-          case 6:
+          case Sumotori.MAKUSHITA:
                 divisao +=  "Terceira Divisão";
                 break;
-          case 7: 
+          case Sumotori.SANDANME: 
                 divisao +=  "Quarta Divisão";
                 break;
-          case 8:
+          case Sumotori.JONIDAN:
                 divisao += "Quinta Divisão";
                 break;
-          case 9:     
+          case Sumotori.JONOKUCHI:     
                 divisao += "Sexta Divisão";
           
         }
          jTextDivisao.setText(divisao);
     }
-    private void limparCampos() {
+    
+    private void resetarTodosCampos() {
+        resetarTextFieldLiteral();
+        resetarTextFieldNumerico();
+        resetarTodosComboBox();
+        limparTodosListModel();
+        atualizarDivisao(0);
+        habilitarInserirSalario(0);
+    }
+    private void limparTodosListModel(){
+         telefonesListModel.clear();
+        premiacaoListModel.clear();
+    }
+    
+    private void resetarTodosComboBox(){
+        jComboBoxEstado.setSelectedIndex(0);
+        jComboBoxSexo.setSelectedIndex(0);
+        jComboBoxCategorias.setSelectedIndex(0);
+    }
+    
+    private void resetarTextFieldNumerico(){
+        jTextFieldTotalDesistencias.setText("0");
+        jTextFieldSalario.setText("0.00");
+        jTextFieldTotalLutas.setText("0");
+        jTextFieldTotalVitorias.setText("0");
+        jTextFieldTotalDerrotas.setText("0");
+        jTextFieldPeso.setText("0.0");
+        jTextFieldNumero.setText("0");
         jTextFieldAltura.setText("0.0");
+    }
+    
+    private void resetarTextFieldLiteral(){
         jTextFieldBairro.setText(null);
         jTextFieldCep.setText(null);
         jTextFieldCidade.setText(null);
         jTextFieldComplemento.setText(null);
         jTextFieldCpf.setText(null);
         jTextFieldDataNascimento.setText(null);
-        jComboBoxEstado.setSelectedIndex(0);
         jTextFieldLogradouro.setText(null);
         jTextFieldNome.setText(null);
         jTextFieldNomeMae.setText(null);
         jTextFieldNomePai.setText(null);
-        jTextFieldNumero.setText("0");
         jTextFieldPais.setText(null);
-        jTextFieldPeso.setText("0.0");
         jTextFieldRg.setText(null);
-        telefonesListModel.clear();
-        premiacaoListModel.clear();
-        jComboBoxSexo.setSelectedIndex(0);
-        jComboBoxCategorias.setSelectedIndex(0);
-        atualizarDivisao(0);
-        atualizarSalario(0);
-        jTextSalario.setText("0.00");
-        jTextTotalLutas.setText("0");
-        jTextTotalVitorias.setText("0");
-        jTextTotalDerrotas.setText("0");
-        jTextTotalDesistencias.setText("0");
     }
-
+    
     private void preencherCampos() {
-        ArrayList<String> telefones;
-        ArrayList<Premiacao> premiacoes;
-
+        preencherDadosPessoais();
+        preencherEndereco();
+        preencherDataNascimento();
+        preencherSexo();
+        preencherPremiacoes();
+        preencherTelefones();
+        preencherDadosSumotori();
+    }
+    
+    private void preencherDadosPessoais(){
         jTextFieldAltura.setText(Double.toString(umSumotori.getAltura()));
-        jTextFieldBairro.setText(umSumotori.getEndereco().getBairro());
-        jTextFieldCep.setText(umSumotori.getEndereco().getCep());
-        jTextFieldCidade.setText(umSumotori.getEndereco().getCidade());
-        jTextFieldComplemento.setText(umSumotori.getEndereco().getComplemento());
         jTextFieldCpf.setText(umSumotori.getCpf());
+        jTextFieldNome.setText(umSumotori.getNome());
+        jTextFieldNomeMae.setText(umSumotori.getNomeMae());
+        jTextFieldNomePai.setText(umSumotori.getNomePai());
+        jTextFieldPeso.setText(Double.toString(umSumotori.getPeso()));
+        jTextFieldRg.setText(umSumotori.getRg());
+    }
+    
+    private void preencherDataNascimento(){
         if (umSumotori.getDataNascimento() == null) {
             jTextFieldDataNascimento.setText(null);
         } else {
             jTextFieldDataNascimento.setText(dateFormat.format(umSumotori.getDataNascimento()));
         }
-        jComboBoxEstado.setSelectedItem(umSumotori.getEndereco().getEstado());
-        jTextFieldLogradouro.setText(umSumotori.getEndereco().getLogradouro());
-        jTextFieldNome.setText(umSumotori.getNome());
-        jTextFieldNomeMae.setText(umSumotori.getNomeMae());
-        jTextFieldNomePai.setText(umSumotori.getNomePai());
-        jTextFieldNumero.setText(umSumotori.getEndereco().getNumero().toString());
-        jTextFieldPais.setText(umSumotori.getEndereco().getPais());
-        jTextFieldPeso.setText(Double.toString(umSumotori.getPeso()));
-        jTextFieldRg.setText(umSumotori.getRg());
-
-        telefonesListModel.clear();
-        telefones = umSumotori.getTelefones();
-        for (String t : telefones) {
-            telefonesListModel.addElement(t);
-        }
-
-        premiacaoListModel.clear();
-        premiacoes = umSumotori.getPremiacoes();
-        for (Premiacao p : premiacoes) {
-            premiacaoListModel.addElement(p);
-        }
-
+    }
+    
+    private void preencherSexo(){
         switch (umSumotori.getSexo()) {
             case SEXO_MASCULINO_VALOR:
                 jComboBoxSexo.setSelectedIndex(SEXO_MASCULINO_INDICE);
@@ -160,92 +158,151 @@ public class CadastroSumotori extends javax.swing.JFrame {
                 jComboBoxSexo.setSelectedIndex(SEXO_FEMININO_INDICE);
                 break;
         }
-        
+    }
+    
+    private void preencherEndereco(){
+        jComboBoxEstado.setSelectedItem(umSumotori.getEndereco().getEstado());
+        jTextFieldLogradouro.setText(umSumotori.getEndereco().getLogradouro());
+        jTextFieldNumero.setText(umSumotori.getEndereco().getNumero().toString());
+        jTextFieldPais.setText(umSumotori.getEndereco().getPais());
+        jTextFieldBairro.setText(umSumotori.getEndereco().getBairro());
+        jTextFieldCep.setText(umSumotori.getEndereco().getCep());
+        jTextFieldCidade.setText(umSumotori.getEndereco().getCidade());
+        jTextFieldComplemento.setText(umSumotori.getEndereco().getComplemento());    
+    }
+    
+    private void preencherPremiacoes(){
+        ArrayList<Premiacao> premiacoes;
+        premiacaoListModel.clear();
+        premiacoes = umSumotori.getPremiacoes();
+        for (Premiacao p : premiacoes) {
+            premiacaoListModel.addElement(p);
+        }
+    }
+    
+    private void preencherTelefones(){
+        ArrayList<String> telefones;
+        telefonesListModel.clear();
+        telefones = umSumotori.getTelefones();
+        for (String t : telefones) {
+            telefonesListModel.addElement(t);
+        }
+    }
+    
+    private void preencherDadosSumotori(){
         jComboBoxCategorias.setSelectedIndex(umSumotori.getCategoria());
         atualizarDivisao(jComboBoxCategorias.getSelectedIndex());
-        atualizarSalario(jComboBoxCategorias.getSelectedIndex());
-        jTextSalario.setText(String.valueOf(umSumotori.getSalario()));
-        jTextTotalLutas.setText(String.valueOf(umSumotori.getTotalLutas()));
-        jTextTotalVitorias.setText(String.valueOf(umSumotori.getTotalVitorias()));
-        jTextTotalDerrotas.setText(String.valueOf(umSumotori.getTotalDerrotas()));
-        jTextTotalDesistencias.setText(String.valueOf(umSumotori.getTotalDesistencias()));
+        habilitarInserirSalario(jComboBoxCategorias.getSelectedIndex());
+        jTextFieldSalario.setText(String.valueOf(umSumotori.getSalario()));
+        jTextFieldTotalLutas.setText(String.valueOf(umSumotori.getTotalLutas()));
+        jTextFieldTotalVitorias.setText(String.valueOf(umSumotori.getTotalVitorias()));
+        jTextFieldTotalDerrotas.setText(String.valueOf(umSumotori.getTotalDerrotas()));
+        jTextFieldTotalDesistencias.setText(String.valueOf(umSumotori.getTotalDesistencias()));
     }
-
+    
     private boolean validarCampos() {
+        this.validarNome();
+        this.validarSalario();
+        this.validarDataNascimento();
+        this.validarTotalLutas();
+        this.validarTotalVitorias();
+        this.validarTotalDerrotas();
+        this.validarTotalDesistencia();
+        return true;
+    }
+    
+    private boolean validarNome(){
         if (jTextFieldNome.getText().trim().length() == 0) {
             this.exibirInformacao("O valor do campo 'Nome' não foi informado.");
             jTextFieldNome.requestFocus();
             return false;
-        }
+        }        
+        return true;
+    }
+    
+    private boolean validarDataNascimento(){
         if (jTextFieldDataNascimento.getText().length() != 0) {
             try {
                 dateFormat.parse(jTextFieldDataNascimento.getText());
-            } catch (ParseException ex) {
+            } catch (ParseException exception) {
                 this.exibirInformacao("O valor do campo 'Data de Nascimento' é inválido.");
                 jTextFieldDataNascimento.requestFocus();
                 return false;
             }
         }
-        
-        
+        return true;
+    }
+    
+    private boolean validarSalario(){
         try{
-            Double salario =Double.parseDouble(jTextSalario.getText());
+            Double salario =Double.parseDouble(jTextFieldSalario.getText());
             if(salario < 0){
                 throw new Exception();
             }
-        }catch(Exception e){
+        }catch(Exception exception){
          this.exibirInformacao("O valor do campo 'Salario' é inválido.");
-            jTextSalario.requestFocus();
+            jTextFieldSalario.requestFocus();
             return false;
         }
-        
+        return true;
+    }
+    
+    private boolean validarTotalLutas(){
         try{
-            int totalLutas =Integer.parseInt(jTextTotalLutas.getText());
+            int totalLutas =Integer.parseInt(jTextFieldTotalLutas.getText());
             if(totalLutas < 0){
                 throw new Exception();
             }
-        }catch(Exception e){
+        }catch(Exception exception){
             this.exibirInformacao("O valor do campo 'Total de Lutas' é inválido.");
-            jTextTotalLutas.requestFocus();
+            jTextFieldTotalLutas.requestFocus();
             return false;
         }
-        
+        return true;
+    }
+    
+    private boolean validarTotalVitorias(){
         try{
-            int totalVitorias = Integer.parseInt(jTextTotalVitorias.getText());
+            int totalVitorias = Integer.parseInt(jTextFieldTotalVitorias.getText());
             if(totalVitorias < 0){
                 throw new Exception();
             }
         }catch(Exception e){
          this.exibirInformacao("O valor do campo 'Total de Vitorias' é inválido.");
-            jTextTotalVitorias.requestFocus();
+            jTextFieldTotalVitorias.requestFocus();
             return false;
-        }
-                
+        }        
+        return true;
+    }
+    
+    private boolean validarTotalDerrotas(){
         try{
-            int totalDerrotas = Integer.parseInt(jTextTotalDerrotas.getText());
+            int totalDerrotas = Integer.parseInt(jTextFieldTotalDerrotas.getText());
             if(totalDerrotas < 0){
                 throw new Exception();
             }
         }catch(Exception e){
          this.exibirInformacao("O valor do campo 'Total de Derrotas' é inválido.");
-            jTextTotalDerrotas.requestFocus();
+            jTextFieldTotalDerrotas.requestFocus();
             return false;
         }
-        
+        return true;
+    }
+    
+    private boolean validarTotalDesistencia(){
         try{
-            int totalDesistencia = Integer.parseInt(jTextTotalDesistencias.getText());
+            int totalDesistencia = Integer.parseInt(jTextFieldTotalDesistencias.getText());
             if(totalDesistencia < 0){
                 throw new Exception();
             }
         }catch(Exception e){
          this.exibirInformacao("O valor do campo 'Total de Desistencias' é inválido.");
-            jTextTotalDesistencias.requestFocus();
+            jTextFieldTotalDesistencias.requestFocus();
             return false;
         }
-        
         return true;
     }
-
+    
     private void habilitarDesabilitarCampos() {
         boolean registroSelecionado = (umSumotori != null);
         jTextFieldAltura.setEnabled(modoAlteracao);
@@ -274,38 +331,97 @@ public class CadastroSumotori extends javax.swing.JFrame {
         jButtonRemoverTelefone.setEnabled(modoAlteracao);
         jComboBoxSexo.setEnabled(modoAlteracao);
         jTableListaSumotori.setEnabled(modoAlteracao == false);
-                
         jComboBoxCategorias.setEnabled(modoAlteracao);
         jButtonAdicionarPremiacao.setEnabled(modoAlteracao);
         jButtonRemoverPremiacao.setEnabled(modoAlteracao);
-        jTextSalario.setEnabled(modoAlteracao);
-        jTextTotalLutas.setEnabled(modoAlteracao);
-        jTextTotalVitorias.setEnabled(modoAlteracao);
-        jTextTotalDerrotas.setEnabled(modoAlteracao);
-        jTextTotalDesistencias.setEnabled(modoAlteracao);
+        jTextFieldSalario.setEnabled(modoAlteracao);
+        jTextFieldTotalLutas.setEnabled(modoAlteracao);
+        jTextFieldTotalVitorias.setEnabled(modoAlteracao);
+        jTextFieldTotalDerrotas.setEnabled(modoAlteracao);
+        jTextFieldTotalDesistencias.setEnabled(modoAlteracao);
     }
-
+    
     private void salvarRegistro() {
-        Endereco endereco;
-        ArrayList<String> telefones;
-        ArrayList<Premiacao> premiacoes;
-        Date dataNascimento;
-
         if (this.validarCampos() == false) {
             return;
         }
-
+        registrarDadosAtleta();
+        registrarDadosSumotori();
+        if (novoRegistro == true) {
+            controleSumotori.adicionar(umSumotori);
+        }
+        modoAlteracao = false;
+        novoRegistro = false;        
+        this.carregarListaSumotori();
+        this.habilitarDesabilitarCampos();
+    }
+        
+    private void registrarDadosAtleta(){
+        if (novoRegistro == true) {
+            umSumotori = new Sumotori(jTextFieldNome.getText());
+        } else {
+            umSumotori.setNome(jTextFieldNome.getText());
+        }
+        registrarSexo();
+        umSumotori.setEndereco(registrarEndereco());
+        umSumotori.setTelefones(registrarTelefones());
+        umSumotori.setPremiacoes(registrarPremiacoes());
+        umSumotori.setDataNascimento(registrarDataNascimento());
+        umSumotori.setAltura(Double.parseDouble(jTextFieldAltura.getText()));
+        umSumotori.setNomeMae(jTextFieldNomeMae.getText());
+        umSumotori.setNomePai(jTextFieldNomePai.getText());
+        umSumotori.setPeso(Double.parseDouble(jTextFieldPeso.getText()));
+        umSumotori.setCpf(jTextFieldCpf.getText());
+        umSumotori.setRg(jTextFieldRg.getText());
+    }
+    
+    private void registrarSexo(){
+        switch (jComboBoxSexo.getSelectedIndex()) {
+            case SEXO_MASCULINO_INDICE:
+                umSumotori.setSexo(SEXO_MASCULINO_VALOR);
+                break;
+            case SEXO_FEMININO_INDICE:
+                umSumotori.setSexo(SEXO_FEMININO_VALOR);
+                break;
+        }
+    }
+    
+    private Date registrarDataNascimento(){ 
+        Date dataNascimento;
         if (jTextFieldDataNascimento.getText().length() == 0) {
             dataNascimento = null;
         } else {
             try {
                 dataNascimento = dateFormat.parse(jTextFieldDataNascimento.getText());
-            } catch (ParseException ex) {
-                exibirInformacao("Falha ao gravar a data de nascimento: " + ex.toString());
-                return;
+            } catch (ParseException exception) {
+                exibirInformacao("Falha ao gravar a data de nascimento: " + exception.toString());
+                return null;
             }
         }
-
+        return dataNascimento;
+    }
+    
+    private ArrayList registrarPremiacoes(){
+         ArrayList<Premiacao> premiacoes;
+         premiacoes = new ArrayList<Premiacao>();
+        for (int i = 0; i < premiacaoListModel.size(); i++) {
+            Premiacao premiacao = (Premiacao) premiacaoListModel.getElementAt(i);
+            premiacoes.add(premiacao);
+        }
+        return premiacoes;
+    }
+    
+    private ArrayList registrarTelefones(){
+        ArrayList<String> telefones;
+        telefones = new ArrayList<String>();
+        for (int i = 0; i < telefonesListModel.size(); i++) {
+            telefones.add(telefonesListModel.getElementAt(i).toString());
+        }
+        return telefones;
+    }
+    
+    private Endereco registrarEndereco(){
+        Endereco endereco;
         endereco = new Endereco();
         endereco.setBairro(jTextFieldBairro.getText());
         endereco.setCep(jTextFieldCep.getText());
@@ -315,59 +431,18 @@ public class CadastroSumotori extends javax.swing.JFrame {
         endereco.setLogradouro(jTextFieldLogradouro.getText());
         endereco.setNumero(jTextFieldNumero.getText());
         endereco.setPais(jTextFieldPais.getText());
-
-        telefones = new ArrayList<String>();
-        for (int i = 0; i < telefonesListModel.size(); i++) {
-            telefones.add(telefonesListModel.getElementAt(i).toString());
-        }
-
-        premiacoes = new ArrayList<Premiacao>();
-        for (int i = 0; i < premiacaoListModel.size(); i++) {
-            Premiacao premiacao = (Premiacao) premiacaoListModel.getElementAt(i);
-            premiacoes.add(premiacao);
-        }
-
-        if (novoRegistro == true) {
-            umSumotori = new Sumotori(jTextFieldNome.getText());
-        } else {
-            umSumotori.setNome(jTextFieldNome.getText());
-        }
-        umSumotori.setEndereco(endereco);
-        umSumotori.setTelefones(telefones);
-        umSumotori.setPremiacoes(premiacoes);
-        umSumotori.setDataNascimento(dataNascimento);
-        umSumotori.setAltura(Double.parseDouble(jTextFieldAltura.getText()));
-        umSumotori.setNomeMae(jTextFieldNomeMae.getText());
-        umSumotori.setNomePai(jTextFieldNomePai.getText());
-        umSumotori.setPeso(Double.parseDouble(jTextFieldPeso.getText()));
-        umSumotori.setCpf(jTextFieldCpf.getText());
-        umSumotori.setRg(jTextFieldRg.getText());
-
-        switch (jComboBoxSexo.getSelectedIndex()) {
-            case SEXO_MASCULINO_INDICE:
-                umSumotori.setSexo(SEXO_MASCULINO_VALOR);
-                break;
-            case SEXO_FEMININO_INDICE:
-                umSumotori.setSexo(SEXO_FEMININO_VALOR);
-                break;
-        }
-        if (novoRegistro == true) {
-            controleSumotori.adicionar(umSumotori);
-        }
-        modoAlteracao = false;
-        novoRegistro = false;
-        
-        umSumotori.setCategoria(jComboBoxCategorias.getSelectedIndex());
-        umSumotori.setSalario(Float.parseFloat(jTextSalario.getText()));
-        umSumotori.setTotalLutas(Integer.parseInt(jTextTotalLutas.getText()));
-        umSumotori.setTotalVitorias(Integer.parseInt(jTextTotalVitorias.getText()));
-        umSumotori.setTotalDerrotas(Integer.parseInt(jTextTotalDerrotas.getText()));
-        umSumotori.setTotalDesistencias(Integer.parseInt(jTextTotalDesistencias.getText()));
-        
-        this.carregarListaSumotori();
-        this.habilitarDesabilitarCampos();
+        return endereco;
     }
-
+    
+    private void registrarDadosSumotori(){
+        umSumotori.setCategoria(jComboBoxCategorias.getSelectedIndex());
+        umSumotori.setSalario(Float.parseFloat(jTextFieldSalario.getText()));
+        umSumotori.setTotalLutas(Integer.parseInt(jTextFieldTotalLutas.getText()));
+        umSumotori.setTotalVitorias(Integer.parseInt(jTextFieldTotalVitorias.getText()));
+        umSumotori.setTotalDerrotas(Integer.parseInt(jTextFieldTotalDerrotas.getText()));
+        umSumotori.setTotalDesistencias(Integer.parseInt(jTextFieldTotalDesistencias.getText()));
+    }
+    
     private void carregarListaSumotori() {
         ArrayList<Sumotori> listaSumotori = controleSumotori.getListaSumotori();
         DefaultTableModel model = (DefaultTableModel) jTableListaSumotori.getModel();
@@ -382,8 +457,6 @@ public class CadastroSumotori extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, info, "Atenção", JOptionPane.INFORMATION_MESSAGE);
     }
     
-   
-       
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -441,11 +514,11 @@ public class CadastroSumotori extends javax.swing.JFrame {
         jLabelTotalDerrotas = new javax.swing.JLabel();
         jLabelTotalDesistencia = new javax.swing.JLabel();
         jComboBoxCategorias = new javax.swing.JComboBox();
-        jTextSalario = new javax.swing.JTextField();
-        jTextTotalLutas = new javax.swing.JTextField();
-        jTextTotalVitorias = new javax.swing.JTextField();
-        jTextTotalDerrotas = new javax.swing.JTextField();
-        jTextTotalDesistencias = new javax.swing.JTextField();
+        jTextFieldSalario = new javax.swing.JTextField();
+        jTextFieldTotalLutas = new javax.swing.JTextField();
+        jTextFieldTotalVitorias = new javax.swing.JTextField();
+        jTextFieldTotalDerrotas = new javax.swing.JTextField();
+        jTextFieldTotalDesistencias = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListPremiacoes = new javax.swing.JList();
         jButtonAdicionarPremiacao = new javax.swing.JButton();
@@ -796,13 +869,13 @@ public class CadastroSumotori extends javax.swing.JFrame {
                     .addComponent(jLabelCategoria))
                 .addGap(25, 25, 25)
                 .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jTextSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextDivisao, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextTotalLutas, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextTotalVitorias, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextTotalDerrotas, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextTotalDesistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldTotalLutas, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldTotalVitorias, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldTotalDerrotas, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldTotalDesistencias, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelPremiacao, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -839,28 +912,28 @@ public class CadastroSumotori extends javax.swing.JFrame {
                             .addComponent(jLabelCategoria))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelSalario))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextTotalLutas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldTotalLutas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelTotalDeLutas))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextTotalVitorias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldTotalVitorias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelTotalVitorias, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextTotalDerrotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldTotalDerrotas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelTotalDerrotas, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelFichaTecnicaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextTotalDesistencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldTotalDesistencias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabelTotalDesistencia))))
                 .addContainerGap(94, Short.MAX_VALUE))
         );
 
-        jPanelFichaTecnicaLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBoxCategorias, jLabelCategoria, jLabelDivisao, jLabelPremiacao, jLabelSalario, jLabelTotalDeLutas, jLabelTotalDerrotas, jLabelTotalDesistencia, jLabelTotalVitorias, jTextDivisao, jTextSalario, jTextTotalDerrotas, jTextTotalDesistencias, jTextTotalLutas, jTextTotalVitorias});
+        jPanelFichaTecnicaLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBoxCategorias, jLabelCategoria, jLabelDivisao, jLabelPremiacao, jLabelSalario, jLabelTotalDeLutas, jLabelTotalDerrotas, jLabelTotalDesistencia, jLabelTotalVitorias, jTextDivisao, jTextFieldSalario, jTextFieldTotalDerrotas, jTextFieldTotalDesistencias, jTextFieldTotalLutas, jTextFieldTotalVitorias});
 
         jTabbedPane1.addTab("Ficha Técnica", jPanelFichaTecnica);
 
@@ -976,7 +1049,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
         umSumotori = null;
         modoAlteracao = true;
         novoRegistro = true;
-        this.limparCampos();
+        this.resetarTodosCampos();
         this.habilitarDesabilitarCampos();
         this.jTextFieldNome.requestFocus();
     }//GEN-LAST:event_jButtonNovoActionPerformed
@@ -987,7 +1060,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         if (novoRegistro == true) {
-            this.limparCampos();
+            this.resetarTodosCampos();
         } else {
             this.preencherCampos();
         }
@@ -1006,7 +1079,7 @@ public class CadastroSumotori extends javax.swing.JFrame {
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         this.controleSumotori.remover(umSumotori);
         umSumotori = null;
-        this.limparCampos();
+        this.resetarTodosCampos();
         this.carregarListaSumotori();
         this.habilitarDesabilitarCampos();
     }//GEN-LAST:event_jButtonExcluirActionPerformed
@@ -1050,7 +1123,7 @@ private void jTableListaSumotoriMouseClicked(java.awt.event.MouseEvent evt) {//G
     }//GEN-LAST:event_jButtonRemoverPremiacaoActionPerformed
 
     private void jButtonAdicionarPremiacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarPremiacaoActionPerformed
-        CadastroPremiacao cadastro = new CadastroPremiacao(this, true);
+        JanelaCadastroPremiacao cadastro = new JanelaCadastroPremiacao(this, true);
         cadastro.setVisible(true);
         if (cadastro.getPremiacao() != null) {
             premiacaoListModel.addElement(cadastro.getPremiacao());
@@ -1061,7 +1134,7 @@ private void jTableListaSumotoriMouseClicked(java.awt.event.MouseEvent evt) {//G
 
     private void jComboBoxCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriasActionPerformed
         atualizarDivisao(jComboBoxCategorias.getSelectedIndex());
-        atualizarSalario(jComboBoxCategorias.getSelectedIndex());
+        habilitarInserirSalario(jComboBoxCategorias.getSelectedIndex());
     }//GEN-LAST:event_jComboBoxCategoriasActionPerformed
 
     private void jTextFieldDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDataNascimentoActionPerformed
@@ -1075,7 +1148,7 @@ private void jTableListaSumotoriMouseClicked(java.awt.event.MouseEvent evt) {//G
     }//GEN-LAST:event_jButtonRemoverTelefoneActionPerformed
 
     private void jButtonAdicionarTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarTelefoneActionPerformed
-        CadastroTelefone cadastro = new CadastroTelefone(this, true);
+        JanelaCadastroTelefone cadastro = new JanelaCadastroTelefone(this, true);
         cadastro.setVisible(true);
         if (cadastro.getTelefone() != null) {
             telefonesListModel.addElement(cadastro.getTelefone());
@@ -1164,10 +1237,10 @@ private void jTableListaSumotoriMouseClicked(java.awt.event.MouseEvent evt) {//G
     private javax.swing.JTextField jTextFieldPais;
     private javax.swing.JTextField jTextFieldPeso;
     private javax.swing.JTextField jTextFieldRg;
-    private javax.swing.JTextField jTextSalario;
-    private javax.swing.JTextField jTextTotalDerrotas;
-    private javax.swing.JTextField jTextTotalDesistencias;
-    private javax.swing.JTextField jTextTotalLutas;
-    private javax.swing.JTextField jTextTotalVitorias;
+    private javax.swing.JTextField jTextFieldSalario;
+    private javax.swing.JTextField jTextFieldTotalDerrotas;
+    private javax.swing.JTextField jTextFieldTotalDesistencias;
+    private javax.swing.JTextField jTextFieldTotalLutas;
+    private javax.swing.JTextField jTextFieldTotalVitorias;
     // End of variables declaration//GEN-END:variables
 }

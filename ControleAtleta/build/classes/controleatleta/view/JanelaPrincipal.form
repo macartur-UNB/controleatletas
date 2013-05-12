@@ -566,13 +566,13 @@
                       </Group>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="jTextSalario" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
+                          <Component id="jTextFieldSalario" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
                           <Component id="jComboBoxCategorias" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
                           <Component id="jTextDivisao" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
-                          <Component id="jTextTotalLutas" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
-                          <Component id="jTextTotalVitorias" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
-                          <Component id="jTextTotalDerrotas" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
-                          <Component id="jTextTotalDesistencias" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
+                          <Component id="jTextFieldTotalLutas" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
+                          <Component id="jTextFieldTotalVitorias" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
+                          <Component id="jTextFieldTotalDerrotas" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
+                          <Component id="jTextFieldTotalDesistencias" alignment="2" min="-2" pref="227" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -620,27 +620,27 @@
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jTextSalario" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldSalario" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelSalario" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jTextTotalLutas" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldTotalLutas" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelTotalDeLutas" linkSize="4" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextTotalVitorias" linkSize="4" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldTotalVitorias" linkSize="4" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelTotalVitorias" linkSize="4" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextTotalDerrotas" linkSize="4" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldTotalDerrotas" linkSize="4" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelTotalDerrotas" linkSize="4" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextTotalDesistencias" linkSize="4" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldTotalDesistencias" linkSize="4" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabelTotalDesistencia" linkSize="4" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -702,15 +702,15 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxCategoriasActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextSalario">
+            <Component class="javax.swing.JTextField" name="jTextFieldSalario">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextTotalLutas">
+            <Component class="javax.swing.JTextField" name="jTextFieldTotalLutas">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextTotalVitorias">
+            <Component class="javax.swing.JTextField" name="jTextFieldTotalVitorias">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextTotalDerrotas">
+            <Component class="javax.swing.JTextField" name="jTextFieldTotalDerrotas">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextTotalDesistencias">
+            <Component class="javax.swing.JTextField" name="jTextFieldTotalDesistencias">
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
               <AuxValues>

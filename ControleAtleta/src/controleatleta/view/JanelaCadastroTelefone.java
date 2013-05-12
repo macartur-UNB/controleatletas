@@ -1,23 +1,13 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+package controleatleta.view;
 
-/*
- * CadastroTelefone1.java
- *
- * Created on 18/10/2011, 20:16:05
- */
-package controleatleta;
-
-public class CadastroTelefone extends javax.swing.JDialog {
+public class JanelaCadastroTelefone extends javax.swing.JDialog {
     private String telefone;
 
     public String getTelefone() {
         return this.telefone;
     }
     
-    public CadastroTelefone(java.awt.Frame parent, boolean modal) {
+    public JanelaCadastroTelefone(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -111,13 +101,13 @@ private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//G
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroTelefone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JanelaCadastroTelefone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroTelefone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JanelaCadastroTelefone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroTelefone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JanelaCadastroTelefone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroTelefone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JanelaCadastroTelefone.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -125,7 +115,7 @@ private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//G
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                CadastroTelefone dialog = new CadastroTelefone(new javax.swing.JFrame(), true);
+                JanelaCadastroTelefone dialog = new JanelaCadastroTelefone(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     @Override

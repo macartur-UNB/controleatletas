@@ -1,8 +1,9 @@
-package controleatleta;
+package controleatleta.view;
 
+import controleatleta.model.Premiacao;
 import javax.swing.JOptionPane;
 
-public class CadastroPremiacao extends javax.swing.JDialog {
+public class JanelaCadastroPremiacao extends javax.swing.JDialog {
 
     private Premiacao premiacao;
 
@@ -10,7 +11,7 @@ public class CadastroPremiacao extends javax.swing.JDialog {
         return premiacao;
     }
 
-    public CadastroPremiacao(java.awt.Frame parent, boolean modal) {
+    public JanelaCadastroPremiacao(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -48,7 +49,6 @@ public class CadastroPremiacao extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -68,7 +68,6 @@ public class CadastroPremiacao extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 97, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -93,7 +92,7 @@ public class CadastroPremiacao extends javax.swing.JDialog {
 private void jButtonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAdicionarActionPerformed
     try {
         Integer.parseInt(jTextFieldAno.getText());
-    } catch (Exception e) {
+    } catch (Exception exception) {
         this.exibirInformacao("O valor do campo 'Ano' é inválido.");
         jTextFieldAno.requestFocus();
         return;
@@ -123,20 +122,20 @@ private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//G
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroPremiacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JanelaCadastroPremiacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroPremiacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JanelaCadastroPremiacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroPremiacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JanelaCadastroPremiacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroPremiacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JanelaCadastroPremiacao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                CadastroPremiacao dialog = new CadastroPremiacao(new javax.swing.JFrame(), true);
+                JanelaCadastroPremiacao dialog = new JanelaCadastroPremiacao(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
 
                     @Override

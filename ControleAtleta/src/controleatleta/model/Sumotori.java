@@ -1,16 +1,17 @@
-package controleatleta;
+package controleatleta.model;
 
 import java.util.ArrayList;
 
-public class Sumotori extends Atleta {
-    private int categoria;//classificado de acordo com o numero de vitórias
-    private double salario; //sumotori da 2 e 1 divisão recebe salario
+public class Sumotori extends Atleta  implements CategoriaSumotori {
+   
     private ArrayList<Premiacao> premiacoes;
-    private int totalLutas; 
+    private int categoria;
+    private double salario; //recebe apenas se for: 1 ou 2 divisão
+    private int totalLutas;
     private int totalVitorias;
     private int totalDerrotas;
     private int totalDesistencias;
-
+    
     public Sumotori(String nome) {
         super(nome);
     }
@@ -18,7 +19,6 @@ public class Sumotori extends Atleta {
     public int getCategoria() {
         return categoria;
     }
-
     public void setSalario(double salario) {
         this.salario = salario;
     }
