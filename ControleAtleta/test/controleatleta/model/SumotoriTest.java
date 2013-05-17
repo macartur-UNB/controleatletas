@@ -1,4 +1,4 @@
-package model;
+package controleatleta.model;
 
 import Util.CategoriaSumotori;
 import controleatleta.model.Premiacao;
