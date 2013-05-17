@@ -13,14 +13,10 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import Util.Constantes;
+import Util.CategoriaSumotori;
 
 public class JanelaPrincipal extends javax.swing.JFrame {
-   
-    //atributos gerais
-    private final byte SEXO_MASCULINO_INDICE = 0;
-    private final byte SEXO_FEMININO_INDICE = 1;
-    private final char SEXO_MASCULINO_VALOR = 'M';
-    private final char SEXO_FEMININO_VALOR = 'F';
     private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     private ControleSumotori controleSumotori;
     private Sumotori umSumotori;
@@ -50,26 +46,26 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private void atualizarDivisao(int indice){
         String divisao = "";
         switch(indice){
-          case Sumotori.YOKUSANA:
-          case Sumotori.OZEKI:
-          case Sumotori.SEKIWAKE:
-          case Sumotori.KOMUSUBI:
-          case Sumotori.MAKUUCHI:
+          case CategoriaSumotori.YOKUSANA:
+          case CategoriaSumotori.OZEKI:
+          case CategoriaSumotori.SEKIWAKE:
+          case CategoriaSumotori.KOMUSUBI:
+          case CategoriaSumotori.MAKUUCHI:
                 divisao += "Primeira Divisão";
                 break;
-          case Sumotori.JURYOU:
+          case CategoriaSumotori.JURYOU:
                 divisao +=  "Segunda Divisão";
                 break;
-          case Sumotori.MAKUSHITA:
+          case CategoriaSumotori.MAKUSHITA:
                 divisao +=  "Terceira Divisão";
                 break;
-          case Sumotori.SANDANME: 
+          case CategoriaSumotori.SANDANME: 
                 divisao +=  "Quarta Divisão";
                 break;
-          case Sumotori.JONIDAN:
+          case CategoriaSumotori.JONIDAN:
                 divisao += "Quinta Divisão";
                 break;
-          case Sumotori.JONOKUCHI:     
+          case CategoriaSumotori.JONOKUCHI:     
                 divisao += "Sexta Divisão";
           
         }
@@ -151,11 +147,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     
     private void preencherSexo(){
         switch (umSumotori.getSexo()) {
-            case SEXO_MASCULINO_VALOR:
-                jComboBoxSexo.setSelectedIndex(SEXO_MASCULINO_INDICE);
+            case Constantes.SEXO_MASCULINO_VALOR:
+                jComboBoxSexo.setSelectedIndex(Constantes.SEXO_MASCULINO_INDICE);
                 break;
-            case SEXO_FEMININO_VALOR:
-                jComboBoxSexo.setSelectedIndex(SEXO_FEMININO_INDICE);
+            case Constantes.SEXO_FEMININO_VALOR:
+                jComboBoxSexo.setSelectedIndex(Constantes.SEXO_FEMININO_INDICE);
                 break;
         }
     }
@@ -295,7 +291,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             if(totalDesistencia < 0){
                 throw new Exception();
             }
-        }catch(Exception e){
+        }catch(Exception eexception){
          this.exibirInformacao("O valor do campo 'Total de Desistencias' é inválido.");
             jTextFieldTotalDesistencias.requestFocus();
             return false;
@@ -304,33 +300,63 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }
     
     private void habilitarDesabilitarCampos() {
+        habilitarDesabilitarBotoesPrincipais();
+        habilitarDesabilidarComboBoxSexo();
+        habilitarDesabilitarBotaoAdicionarERemoverTelefone();
+        habilitarDesabilitarListaSumotori();
+        habilitarDesabilitarCamposPessoas();
+        habilitarDesabilitarCamposDeEndereco();
+        habilitarDesabilitarCamposDeSumotori();
+    }
+    
+    private void habilitarDesabilidarComboBoxSexo(){
+        jComboBoxSexo.setEnabled(modoAlteracao);
+    }
+    
+    private void habilitarDesabilitarBotaoAdicionarERemoverTelefone(){
+        jButtonAdicionarTelefone.setEnabled(modoAlteracao);
+        jButtonRemoverTelefone.setEnabled(modoAlteracao);
+    }
+    
+    private void habilitarDesabilitarListaSumotori(){
+        jTableListaSumotori.setEnabled(modoAlteracao == false);
+    }
+    
+    private void habilitarDesabilitarBotoesPrincipais(){
         boolean registroSelecionado = (umSumotori != null);
-        jTextFieldAltura.setEnabled(modoAlteracao);
-        jTextFieldBairro.setEnabled(modoAlteracao);
-        jTextFieldCep.setEnabled(modoAlteracao);
-        jTextFieldCidade.setEnabled(modoAlteracao);
-        jTextFieldComplemento.setEnabled(modoAlteracao);
-        jTextFieldCpf.setEnabled(modoAlteracao);
-        jTextFieldDataNascimento.setEnabled(modoAlteracao);
-        jComboBoxEstado.setEnabled(modoAlteracao);
-        jTextFieldLogradouro.setEnabled(modoAlteracao);
-        jTextFieldNome.setEnabled(modoAlteracao);
-        jTextFieldNomeMae.setEnabled(modoAlteracao);
-        jTextFieldNomePai.setEnabled(modoAlteracao);
-        jTextFieldNumero.setEnabled(modoAlteracao);
-        jTextFieldPais.setEnabled(modoAlteracao);
-        jTextFieldPeso.setEnabled(modoAlteracao);
-        jTextFieldRg.setEnabled(modoAlteracao);
         jButtonNovo.setEnabled(modoAlteracao == false);
         jButtonAlterar.setEnabled(modoAlteracao == false && registroSelecionado == true);
         jButtonExcluir.setEnabled(modoAlteracao == false && registroSelecionado == true);
         jButtonPesquisar.setEnabled(modoAlteracao == false);
         jButtonSalvar.setEnabled(modoAlteracao);
         jButtonCancelar.setEnabled(modoAlteracao);
-        jButtonAdicionarTelefone.setEnabled(modoAlteracao);
-        jButtonRemoverTelefone.setEnabled(modoAlteracao);
-        jComboBoxSexo.setEnabled(modoAlteracao);
-        jTableListaSumotori.setEnabled(modoAlteracao == false);
+    }
+    
+    
+    
+    private void habilitarDesabilitarCamposPessoas(){
+        jTextFieldAltura.setEnabled(modoAlteracao);
+        jTextFieldCpf.setEnabled(modoAlteracao);
+        jTextFieldDataNascimento.setEnabled(modoAlteracao);
+        jTextFieldNome.setEnabled(modoAlteracao);
+        jTextFieldNomeMae.setEnabled(modoAlteracao);
+        jTextFieldNomePai.setEnabled(modoAlteracao);
+        jTextFieldNumero.setEnabled(modoAlteracao);
+        jTextFieldPeso.setEnabled(modoAlteracao);
+        jTextFieldRg.setEnabled(modoAlteracao);
+    }
+    
+    private void habilitarDesabilitarCamposDeEndereco(){   
+        jTextFieldBairro.setEnabled(modoAlteracao);
+        jTextFieldCep.setEnabled(modoAlteracao);
+        jTextFieldCidade.setEnabled(modoAlteracao);
+        jTextFieldComplemento.setEnabled(modoAlteracao);
+        jComboBoxEstado.setEnabled(modoAlteracao);
+        jTextFieldLogradouro.setEnabled(modoAlteracao);
+        jTextFieldPais.setEnabled(modoAlteracao);
+    }
+    
+    private void habilitarDesabilitarCamposDeSumotori(){
         jComboBoxCategorias.setEnabled(modoAlteracao);
         jButtonAdicionarPremiacao.setEnabled(modoAlteracao);
         jButtonRemoverPremiacao.setEnabled(modoAlteracao);
@@ -340,6 +366,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         jTextFieldTotalDerrotas.setEnabled(modoAlteracao);
         jTextFieldTotalDesistencias.setEnabled(modoAlteracao);
     }
+    
     
     private void salvarRegistro() {
         if (this.validarCampos() == false) {
@@ -377,11 +404,11 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     
     private void registrarSexo(){
         switch (jComboBoxSexo.getSelectedIndex()) {
-            case SEXO_MASCULINO_INDICE:
-                umSumotori.setSexo(SEXO_MASCULINO_VALOR);
+            case Constantes.SEXO_MASCULINO_INDICE:
+                umSumotori.setSexo(Constantes.SEXO_MASCULINO_VALOR);
                 break;
-            case SEXO_FEMININO_INDICE:
-                umSumotori.setSexo(SEXO_FEMININO_VALOR);
+            case Constantes.SEXO_FEMININO_INDICE:
+                umSumotori.setSexo(Constantes.SEXO_FEMININO_VALOR);
                 break;
         }
     }

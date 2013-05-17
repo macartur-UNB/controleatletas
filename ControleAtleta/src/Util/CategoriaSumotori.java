@@ -1,8 +1,9 @@
 
-package controleatleta.model;
+package Util;
 
-interface CategoriaSumotori {
+public class CategoriaSumotori {
     
+    //OBS: Apenas categorias professionais recebem sálario
     //primeira divisão - categoria profissional
     
     public static final int YOKUSANA = 0;

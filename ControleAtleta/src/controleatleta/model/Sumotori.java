@@ -2,11 +2,11 @@ package controleatleta.model;
 
 import java.util.ArrayList;
 
-public class Sumotori extends Atleta  implements CategoriaSumotori {
+public class Sumotori extends Atleta {
    
     private ArrayList<Premiacao> premiacoes;
     private int categoria;
-    private double salario; //recebe apenas se for: 1 ou 2 divisão
+    private double salario;
     private int totalLutas;
     private int totalVitorias;
     private int totalDerrotas;
@@ -70,4 +70,5 @@ public class Sumotori extends Atleta  implements CategoriaSumotori {
     public void setTotalVitorias(int vitorias) {
         this.totalVitorias = vitorias;
     }
+    
 }
